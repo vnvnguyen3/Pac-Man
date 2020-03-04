@@ -109,7 +109,7 @@ public class Ghost extends Creature{
 		animRight.tick();
 		animUp.tick();
 		animDown.tick();
-		if(x % 30 == 0 && y % 30 == 0) {
+		if(x % Tile.TILE_WIDTH == 0 && y % Tile.TILE_HEIGHT == 0) {
 			turn();
 		}
 		move();
