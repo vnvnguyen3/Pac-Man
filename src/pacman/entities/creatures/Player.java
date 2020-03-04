@@ -79,7 +79,7 @@ public class Player extends Creature{
 		if(!dead) {
 			getInput();
 		}
-		if(x % 30 == 0 && y % 30 == 0) {
+		if(x % Tile.TILE_WIDTH == 0 && y % Tile.TILE_HEIGHT == 0) {
 			turn();
 		}
 		move();
@@ -100,29 +100,41 @@ public class Player extends Creature{
 	}
 	
 	public void turn() {
-		if(holdLeft && !collisionWithTile((int)(x-1)/Tile.TILE_WIDTH,(int)(y)/Tile.TILE_HEIGHT)&&
-				!collisionWithTile((int)(x-1)/Tile.TILE_WIDTH,(int)(y+ bounds.height)/Tile.TILE_HEIGHT)) {
-			xMove = -speed;
-			yMove = 0;
+		if(handler.getKeyManager().up) {
 			holdLeft = false;
-		}
-		if(holdRight && !collisionWithTile((int)(x+width+1)/Tile.TILE_WIDTH,(int)(y)/Tile.TILE_HEIGHT)&&
-				!collisionWithTile((int)(x+width+1)/Tile.TILE_WIDTH,(int)(y+ bounds.height)/Tile.TILE_HEIGHT)) {
-			xMove = speed;
-			yMove = 0;
 			holdRight = false;
-		}
-		if(holdUp && !collisionWithTile((int)(x)/Tile.TILE_WIDTH,(int)(y-1)/Tile.TILE_HEIGHT)&&
-				!collisionWithTile((int)(x + bounds.width)/Tile.TILE_WIDTH,(int)(y-1)/Tile.TILE_HEIGHT)) {
-			yMove = -speed;
-			xMove = 0;
-			holdUp = false;
-		}
-		if(holdDown && !collisionWithTile((int)(x)/Tile.TILE_WIDTH,(int)(y+height+1)/Tile.TILE_HEIGHT)&&
-				!collisionWithTile((int)(x + bounds.width)/Tile.TILE_WIDTH,(int)(y+height+1)/Tile.TILE_HEIGHT)) {
-			yMove = speed;
-			xMove = 0;
+			holdUp = true;
 			holdDown = false;
+			if(yMove == speed) {
+				yMove = -speed;
+			}
+		}
+		if(handler.getKeyManager().down) {
+			holdLeft = false;
+			holdRight = false;
+			holdUp = false;
+			holdDown = true;
+			if(yMove == -speed) {
+				yMove = speed;
+			}
+		}
+		if(handler.getKeyManager().left) {
+			holdLeft = true;
+			holdRight = false;
+			holdUp = false;
+			holdDown = false;
+			if(xMove == speed) {
+				xMove = -speed;
+			}
+		}
+		if(handler.getKeyManager().right) {
+			holdLeft = false;
+			holdRight = true;
+			holdUp = false;
+			holdDown = false;
+			if(xMove == -speed) {
+				xMove = speed;
+			}
 		}
 	}
 
